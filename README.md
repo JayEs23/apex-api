@@ -1,66 +1,364 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Laravel User Management System API
 
-## About Laravel
+This project is a User Management System API developed using Laravel. It provides endpoints for user authentication, registration, user management, and more.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Table of Contents
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Application](#running-the-application)
+- [Usage](#usage)
+  - [Authentication](#authentication)
+  - [Endpoints](#endpoints)
+- [Testing](#testing)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [License](#license)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Getting Started
 
-## Learning Laravel
+### Prerequisites
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Before running this application, ensure you have the following prerequisites installed:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- [PHP](https://www.php.net/) (>= 7.4 recommended)
+- [Composer](https://getcomposer.org/)
+- [MySQL](https://www.mysql.com/) or [PostgreSQL](https://www.postgresql.org/) database
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Installation
 
-## Laravel Sponsors
+1. Clone the repository to your local machine:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+   ```bash
+   git clone https://github.com/JayEs23/apex-api.git
+   ```
 
-### Premium Partners
+2. Navigate to the project directory:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+   ```bash
+   cd apex-api
+   ```
+
+3. Install PHP dependencies using Composer:
+
+   ```bash
+   composer install
+   ```
+
+4. Copy the `.env.example` file to `.env`:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+5. Generate a new application key:
+
+   ```bash
+   php artisan key:generate
+   ```
+
+6. Update the `.env` file with your database credentials and other configuration options.
+
+7. Run the database migrations to create the necessary tables:
+
+   ```bash
+   php artisan migrate
+   ```
+
+8. (Optional) Seed the database with sample data:
+
+   ```bash
+   php artisan db:seed
+   ```
+
+### Running the Application
+
+To run the application, use the following command:
+
+```bash
+php artisan serve
+```
+
+This will start a development server, and you can access the application at `http://localhost:8000`.
+
+## Usage
+
+### Authentication
+
+The API uses Laravel Passport for authentication. You need to register and authenticate users to access protected endpoints.
+
+To register a new user, send a POST request to `/api/authentication/register` with the user's name, email, and password.
+
+To authenticate a user, send a POST request to `/api/authentication/login` with the user's email and password. This will return an access token that you can use to make authenticated requests to protected endpoints.
+
+### Endpoints
+
+The API provides the following endpoints:
+
+- **User Management**: CRUD operations for managing user profiles.
+  - `POST /api/admin/users`: Create a new user (admin only).
+  - `GET /api/admin/users`: Get a list of all users (admin only).
+  - `PUT /api/admin/users/{id}`: Update a user's profile (admin only).
+  - `DELETE /api/admin/users/{id}`: Delete a user (admin only).
+- **Profile Management**: Update the authenticated user's profile.
+  - `PUT /api/profile/update`: Update the authenticated user's profile.
+  - `PUT /api/profile/password`: Update the authenticated user's password.
+- **Authentication**:
+  - `POST /api/authentication/register`: Register a new user.
+  - `POST /api/authentication/login`: Log in an existing user.
+  - `POST /api/logout`: Log out the authenticated user.
+
+Refer to the API documentation for detailed information on each endpoint.
+
+## Testing
+
+To run the PHPUnit tests, use the following command:
+
+```bash
+php artisan test
+```
+
+This will run all the tests in the `tests` directory and display the results.
+
+
+# API Documentation
+
+This document provides detailed documentation for the endpoints available in the Laravel User Management System API.
+
+## Base URL
+
+The base URL for accessing the API is `http://localhost:8000/api`.
+
+## Authentication
+
+### Register a New User
+
+Endpoint: `POST /authentication/register`
+
+#### Request Parameters
+
+- `name` (string, required): The name of the user.
+- `email` (string, required): The email address of the user.
+- `password` (string, required): The password for the user.
+
+#### Example Request
+
+```json
+{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123"
+}
+```
+
+#### Possible Responses
+
+- `201 Created`: User registered successfully.
+  ```json
+  {
+      "status": "success",
+      "message": "User registered successfully",
+      "data": {
+          "id": 1,
+          "name": "John Doe",
+          "email": "john@example.com",
+          "created_at": "2022-04-25T12:00:00Z",
+          "updated_at": "2022-04-25T12:00:00Z"
+      }
+  }
+  ```
+
+- `422 Unprocessable Entity`: Validation error (e.g., invalid email format).
+  ```json
+  {
+      "status": "error",
+      "message": "Validation error",
+      "data": {
+          "email": ["The email must be a valid email address."]
+      }
+  }
+  ```
+
+### Login
+
+Endpoint: `POST /authentication/login`
+
+#### Request Parameters
+
+- `email` (string, required): The email address of the user.
+- `password` (string, required): The password for the user.
+
+#### Example Request
+
+```json
+{
+    "email": "john@example.com",
+    "password": "password123"
+}
+```
+
+#### Possible Responses
+
+- `200 OK`: Login successful.
+  ```json
+  {
+      "status": "success",
+      "message": "Login successful",
+      "data": {
+          "access_token": "<access-token>",
+          "token_type": "Bearer",
+          "expires_in": 3600
+      }
+  }
+  ```
+
+- `401 Unauthorized`: Incorrect email or password.
+  ```json
+  {
+      "status": "error",
+      "message": "Invalid credentials",
+      "data": null
+  }
+  ```
+
+### Logout
+
+Endpoint: `POST /logout`
+
+#### Authorization
+
+Include the access token obtained during login in the Authorization header as a Bearer token.
+
+#### Possible Responses
+
+- `200 OK`: Logout successful.
+  ```json
+  {
+      "status": "success",
+      "message": "Logged out successfully",
+      "data": null
+  }
+  ```
+
+- `401 Unauthorized`: Invalid or missing access token.
+  ```json
+  {
+      "status": "error",
+      "message": "Unauthenticated.",
+      "data": null
+  }
+  ```
+
+### User Management
+
+#### Creating a User (Admin Only)
+
+Endpoint: `POST /admin/users`
+
+#### Request Parameters
+
+- `name` (string, required): The name of the user.
+- `email` (string, required): The email address of the user.
+- `password` (string, required): The password for the user.
+- `role` (string, required): The role of the user (`user` or `admin`).
+
+#### Authorization
+
+Include the access token of an admin user obtained during login in the Authorization header as a Bearer token.
+
+#### Example Request
+
+```json
+{
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "password": "password123",
+    "role": "user"
+}
+```
+
+#### Possible Responses
+
+- `201 Created`: User created successfully.
+  ```json
+  {
+      "status": "success",
+      "message": "User created successfully",
+      "data": {
+          "id": 2,
+          "name": "Jane Doe",
+          "email": "jane@example.com",
+          "role": "user",
+          "created_at": "2022-04-25T12:00:00Z",
+          "updated_at": "2022-04-25T12:00:00Z"
+      }
+  }
+  ```
+
+- `422 Unprocessable Entity`: Validation error or duplicate email.
+  ```json
+  {
+      "status": "error",
+      "message": "Validation error",
+      "data": {
+          "email": ["The email has already been taken."]
+      }
+  }
+  ```
+
+#### Retrieving a List of Users (Admin Only)
+
+Endpoint: `GET /admin/users`
+
+#### Authorization
+
+Include the access token of an admin user obtained during login in the Authorization header as a Bearer token.
+
+#### Possible Responses
+
+- `200 OK`: Users retrieved successfully.
+  ```json
+  {
+      "status": "success",
+      "message": "Users retrieved successfully",
+      "data": [
+          {
+              "id": 1,
+              "name": "John Doe",
+              "email": "john@example.com",
+              "role": "admin",
+              "created_at": "2022-04-25T12:00:00Z",
+              "updated_at": "2022-04-25T12:00:00Z"
+          },
+          {
+              "id": 2,
+              "name": "Jane Doe",
+              "email": "jane@example.com",
+              "role": "user",
+              "created_at": "2022-04-25T12:00:00Z",
+              "updated_at": "2022-04-25T12:00:00Z"
+          }
+      ]
+  }
+  ```
+
+- `401 Unauthorized`: Access denied.
+  ```json
+  {
+      "status": "error",
+      "message": "Unauthorized.",
+      "data": null
+  }
+  ```
+
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Contributions are welcome! Please read the [Contributing Guidelines](CONTRIBUTING.md) for more information.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the [MIT License](LICENSE).
+
