@@ -5,6 +5,8 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Gate;
+
 
 
 class AuthServiceProvider extends ServiceProvider
@@ -28,6 +30,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Route::group(['prefix' => 'api'], function () {
             Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
+        });
+
+        Gate::define('admin', function ($user) {
+            return $user->isAdmin();
         });
     }
 }
