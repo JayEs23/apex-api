@@ -50,4 +50,39 @@ class User extends Authenticatable
     {
         return in_array('admin', $this->roles);
     }
+
+    /**
+     * Assign a role to the user.
+     *
+     * @param string $role
+     * @return void
+     */
+    public function assignRole(string $role)
+    {
+        // Ensure that $this->roles is initialized as an array even if it's initially null
+        $roles = $this->roles ?? [];
+
+        if (!in_array($role, $roles)) {
+            $roles[] = $role;
+            $this->roles = $roles;
+            $this->save();
+        }
+    }
+
+    /**
+     * Remove a role from the user.
+     *
+     * @param string $role
+     * @return void
+     */
+    public function removeRole(string $role)
+    {
+        $this->roles = array_diff($this->roles, [$role]);
+        $this->save();
+    }
+
+    public function hasRole($role)
+    {
+        return in_array($role, $this->roles);
+    }
 }
