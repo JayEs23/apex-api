@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'roles'
     ];
 
     /**
@@ -41,5 +42,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'roles' => 'array', //define role attribute as an array
     ];
+
+    // Check if user has admin role
+    public function isAdmin()
+    {
+        return in_array('admin', $this->roles);
+    }
 }
